@@ -24,14 +24,14 @@ jobs:
       run: |
         rm -rf /tmp/WLEDtemp/* || true
         mkdir -p /tmp/WLEDtemp
-        wget https://github.com/Aircoookie/WLED/archive/refs/heads/main.zip -O /tmp/WLEDtemp/mm.zip
+        wget https://api.github.com/repos/Aircoookie/WLED/zipball/v0.15.0-b3 -O /tmp/WLEDtemp/mm.zip
         unzip /tmp/WLEDtemp/mm.zip -d /tmp/WLEDtemp
         find /tmp/WLEDtemp -maxdepth 1 -mindepth 1 -name "*" -type d >> /tmp/WLEDtemp/wledfoldername
         cd `cat /tmp/WLEDtemp/wledfoldername`
         npm install
         echo '[env:custom_build]' >>platformio.ini
         echo 'extends = env:esp32c3dev' >>platformio.ini
-        echo 'build_flags = ${env:esp32c3dev.build_flags} -D WLED_ENABLE_MQTT -D LEDPIN=21 -D BTNPIN=20 -D USERMOD_DALLASTEMPERATURE' >>platformio.ini
+        echo 'build_flags = ${env:esp32c3dev.build_flags} -D WLED_ENABLE_MQTT -D DEFAULT_LED_COUNT=60 -D USERMOD_DALLASTEMPERATURE' >>platformio.ini
         echo 'lib_deps = ' >>platformio.ini
         echo '  ${env:esp32c3dev.lib_deps}' >>platformio.ini
         echo '  OneWire@~2.3.7' >>platformio.ini
